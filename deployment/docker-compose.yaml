@@ -1,0 +1,24 @@
+version: "3.7"
+
+services:
+  opa:
+    build:
+      context: ../
+      dockerfile: ./Dockerfile
+    environment:
+      DB_VENDOR: POSTGRES
+      DB_ADDR: db
+      DB_PORT: ${DATABASE_PORT}
+      DB_DATABASE: ${DATABASE_DB}
+      DB_USER: ${DATABASE_USER}
+      DB_SCHEMA: public
+      DB_PASSWORD: ${DATABASE_PASSWORD}
+      KEYCLOAK_USER: ${KEYCLOAK_USER}
+      KEYCLOAK_PASSWORD: ${KEYCLOAK_PASSWORD}
+      KEYCLOAK_LOGLEVEL: DEBUG
+    ports:
+      - 8181:8181
+    networks:
+      - AST
+networks:
+  AST:
