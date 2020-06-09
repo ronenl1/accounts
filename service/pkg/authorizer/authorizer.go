@@ -74,8 +74,8 @@ func (opaAuth *OPAAuthorizer) convertRequestToInput(req *http.Request) opaInput 
 		Method:   req.Method,
 		Path:     strings.Split(req.URL.Path, "/")[1:],
 		Region:   req.Header.Get("region"),
-		Roles:    strings.Split(req.Header.Get("Roles"), ","),
-		UserName: req.Header.Get("userName"),
+		Roles:    strings.Split(req.Header.Get("roles"), ","),
+		UserName: req.Header.Get("username"),
 	}
 	return input
 }

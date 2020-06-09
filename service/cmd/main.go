@@ -43,12 +43,12 @@ func main() {
 			return
 		}
 		if allowed {
-			w.Write([]byte("kakoi"))
+			w.Write([]byte("jesnok"))
 		} else {
 			http.Error(w, "Not authorized", http.StatusUnauthorized)
 		}
 	}
-	router.GET("/accounts/:id", handler)
+	router.GET("/account/:id", handler)
 	err = http.ListenAndServe("localhost:7777", router)
 	if err != nil {
 		log.Printf("%v", err)
