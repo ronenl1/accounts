@@ -4,7 +4,6 @@ default allow = false
 
 import data
 
-
 allow {
     input.method == "GET"
     some id

@@ -9,10 +9,29 @@ import (
 	"github.com/julienschmidt/httprouter"
 )
 
+const data = `{
+    "accounts": {
+        "111": {
+            "userName": "kakoi",
+            "region": "USA"
+        },
+        "222": {
+            "userName": "jesnok",
+            "region": "EUROPE"
+        }
+    },
+    "orders": {
+        "1": {
+            "item": [],
+            "accountID": "111"
+        }
+    }
+}`
+
 func main() {
 	router := httprouter.New()
 
-	auth, err := authorizer.New("../config/opa", "")
+	auth, err := authorizer.New("../config/opa", data)
 	if err != nil {
 		log.Printf("%v", err)
 	}

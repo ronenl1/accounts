@@ -4,6 +4,7 @@ import (
 	"bytes"
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -13,9 +14,11 @@ import (
 )
 
 type opaInput struct {
-	Method  interface{} `json:"method"`
-	Path    interface{} `json:"path"`
-	Headers interface{} `json:"headers"`
+	Method   interface{} `json:"method"`
+	Path     interface{} `json:"path"`
+	Roles    interface{} `json:"roles"`
+	Region   interface{} `json:"region"`
+	UserName interface{} `json:"userName"`
 }
 
 type OPAAuthorizer struct {
@@ -43,7 +46,7 @@ func New(opaDirectory, storeData string) (opaAuthorizer OPAAuthorizer, err error
 func (opaAuth *OPAAuthorizer) EvalRequest(req *http.Request) (allowed bool, err error) {
 	ctx := context.Background()
 	r := rego.New(
-		rego.Query("allowed = data.ast_jwt.allow"),
+		rego.Query("allowed = data.demo.allow"),
 		opaAuth.model,
 		rego.Store(opaAuth.store),
 		rego.Transaction(opaAuth.txn),
@@ -53,6 +56,7 @@ func (opaAuth *OPAAuthorizer) EvalRequest(req *http.Request) (allowed bool, err 
 		return false, err
 	}
 	input := opaAuth.convertRequestToInput(req)
+	fmt.Printf("%v", input)
 	rs, err := query.Eval(ctx, rego.EvalInput(input))
 	if err != nil {
 		return false, err
@@ -65,10 +69,13 @@ func (opaAuth *OPAAuthorizer) EvalRequest(req *http.Request) (allowed bool, err 
 }
 
 func (opaAuth *OPAAuthorizer) convertRequestToInput(req *http.Request) opaInput {
+
 	input := opaInput{
-		Method:  req.Method,
-		Path:    strings.Split(req.URL.Path, "/")[1:],
-		Headers: req.Header,
+		Method:   req.Method,
+		Path:     strings.Split(req.URL.Path, "/")[1:],
+		Region:   req.Header.Get("region"),
+		Roles:    strings.Split(req.Header.Get("Roles"), ","),
+		UserName: req.Header.Get("userName"),
 	}
 	return input
 }
