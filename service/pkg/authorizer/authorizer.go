@@ -29,6 +29,7 @@ type OPAAuthorizer struct {
 
 func New(opaDirectory, storeData string) (opaAuthorizer OPAAuthorizer, err error) {
 	ctx := context.Background()
+	fmt.Printf("%v", storeData)
 	buffer := bytes.NewBufferString(storeData)
 	store := inmem.NewFromReader(buffer)
 	txn, err := store.NewTransaction(ctx, storage.WriteParams)
@@ -56,7 +57,6 @@ func (opaAuth *OPAAuthorizer) EvalRequest(req *http.Request) (allowed bool, err 
 		return false, err
 	}
 	input := opaAuth.convertRequestToInput(req)
-	fmt.Printf("%v", input)
 	rs, err := query.Eval(ctx, rego.EvalInput(input))
 	if err != nil {
 		return false, err
@@ -69,7 +69,6 @@ func (opaAuth *OPAAuthorizer) EvalRequest(req *http.Request) (allowed bool, err 
 }
 
 func (opaAuth *OPAAuthorizer) convertRequestToInput(req *http.Request) opaInput {
-
 	input := opaInput{
 		Method:   req.Method,
 		Path:     strings.Split(req.URL.Path, "/")[1:],
