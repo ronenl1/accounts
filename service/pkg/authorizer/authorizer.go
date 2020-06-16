@@ -1,7 +1,6 @@
 package authorizer
 
 import (
-	"bytes"
 	"context"
 	"errors"
 	"fmt"
@@ -11,6 +10,7 @@ import (
 	"github.com/open-policy-agent/opa/rego"
 	"github.com/open-policy-agent/opa/storage"
 	"github.com/open-policy-agent/opa/storage/inmem"
+	"github.com/open-policy-agent/opa/util"
 )
 
 type opaInput struct {
@@ -27,11 +27,18 @@ type OPAAuthorizer struct {
 	model func(r *rego.Rego)
 }
 
-func New(opaDirectory, storeData string) (opaAuthorizer OPAAuthorizer, err error) {
+func New(opaDirectory string, storeData []byte) (opaAuthorizer OPAAuthorizer, err error) {
 	ctx := context.Background()
-	fmt.Printf("%v", storeData)
-	buffer := bytes.NewBufferString(storeData)
-	store := inmem.NewFromReader(buffer)
+	fmt.Printf("%v", string(storeData))
+
+	var json map[string]interface{}
+	err = util.UnmarshalJSON(storeData, &json)
+	if err != nil {
+		// Handle error.
+	}
+	store := inmem.NewFromObject(json)
+	// buffer := bytes.NewBufferString(storeData)
+	// store := inmem.NewFromObject(buffer)
 	txn, err := store.NewTransaction(ctx, storage.WriteParams)
 	if err != nil {
 		return opaAuthorizer, err
