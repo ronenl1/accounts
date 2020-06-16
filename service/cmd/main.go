@@ -13,11 +13,9 @@ import (
 
 func main() {
 
-	content, err := ioutil.ReadFile("../config/opa/data.json")
-	data := string(content)
-	log.Printf("%v", data)
+	content, err := ioutil.ReadFile("./config/opa/data.json")
 
-	auth, err := authorizer.New("../config/opa", data)
+	auth, err := authorizer.New("./config/opa", content)
 	if err != nil {
 		log.Printf("%v", err)
 	}
