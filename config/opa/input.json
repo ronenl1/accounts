@@ -1,0 +1,12 @@
+{
+    "method": "GET",
+    "userName": "alice",
+    "region": "USA",
+    "roles": [
+        "customer-service"
+    ],
+    "path": [
+        "account",
+        "111"
+    ]
+}
