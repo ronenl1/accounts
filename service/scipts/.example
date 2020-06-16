@@ -1,4 +1,0 @@
-run service C:\opa\opa_windows_amd64.exe run --server .\policy.rego
-
-
-docker run openpolicyagent/opa run --server --log-level debug 
