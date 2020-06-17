@@ -3,6 +3,7 @@ package authorizer
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -20,6 +21,16 @@ type opaInput struct {
 	UserName interface{} `json:"userName"`
 }
 
+type Accounts struct {
+	Accounts []Account `json:"accounts"`
+}
+
+type Account struct {
+	Id       int    `json:"ID"`
+	Username string `json:"username"`
+	Region   string `json:"region"`
+}
+
 type OPAAuthorizer struct {
 	store storage.Store
 	txn   storage.Transaction
@@ -27,16 +38,16 @@ type OPAAuthorizer struct {
 }
 
 // Returns a new OPA object
-func New(opaDirectory string, storeData []byte) (opaAuthorizer OPAAuthorizer, err error) {
+func New(opaDirectory string, dataStoreBytes []byte) (opaAuthorizer OPAAuthorizer, err error) {
 	ctx := context.Background()
-	// fmt.Printf("%v", string(storeData))
+	var dataStore map[string]interface{}
 
-	var json map[string]interface{}
-	err = util.UnmarshalJSON(storeData, &json)
+	err = util.UnmarshalJSON(dataStoreBytes, &dataStore)
 	if err != nil {
-		return opaAuthorizer, err
+		fmt.Println("Failed to parse data store json")
 	}
-	store := inmem.NewFromObject(json)
+
+	store := inmem.NewFromObject(dataStore)
 	txn, err := store.NewTransaction(ctx, storage.WriteParams)
 	if err != nil {
 		return opaAuthorizer, err
@@ -68,7 +79,7 @@ func (opaAuth *OPAAuthorizer) EvalRequest(req *http.Request) (allowed bool, err 
 	}
 	allowed, ok := rs[0].Bindings["allowed"].(bool)
 	if !ok {
-		return false, errors.New("failed to convert allowed to bool")
+		return false, errors.New("Failed to convert allowed to bool")
 	}
 	return allowed, err
 }

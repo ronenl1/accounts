@@ -1,18 +1,19 @@
 {
-  "accounts": {
-    "111": {
-      "username": "kakoi",
-      "region": "USA"
+  "accounts": [
+    {
+      "ID": "1",
+      "username": "Bob",
+      "region": "US"
     },
-    "222": {
-      "username": "jesnok",
-      "region": "EUROPE"
+    {
+      "ID": "2",
+      "username": "Mark",
+      "region": "EU"
+    },
+    {
+      "ID": "3",
+      "username": "Michael",
+      "region": "EU"
     }
-  },
-  "orders": {
-    "1": {
-      "item": [],
-      "accountID": "111"
-    }
-  }
+  ]
 }

@@ -8,7 +8,7 @@ allow {
     input.method == "GET"
     some id
     input.path = ["accounts",id]
-    data.accounts[id].username == input.userName 
+    data.accounts[ID].username == input.userName 
 }
 
 allow {

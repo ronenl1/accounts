@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
-	"strings"
 
 	"demo/pkg/authorizer"
 
@@ -14,9 +13,10 @@ import (
 
 func main() {
 
-	content, err := ioutil.ReadFile("./config/opa/data.json")
+	dataStoreBytes, _ := ioutil.ReadFile("./config/opa/data.json")
 
-	auth, err := authorizer.New("./config/opa", content)
+	auth, err := authorizer.New("./config/opa", dataStoreBytes)
+
 	if err != nil {
 		log.Printf("%v", err)
 	} else {
@@ -30,8 +30,10 @@ func main() {
 			return
 		}
 		if allowed {
-			path := strings.Split(r.URL.Path, "/")[1:]
-			w.Write([]byte("Hello Account: " + path[1]))
+			_, err = w.Write([]byte("Hello " + r.Header.Get("username")))
+			if err != nil {
+				return
+			}
 		} else {
 			http.Error(w, "Unauthorized", http.StatusUnauthorized)
 		}
