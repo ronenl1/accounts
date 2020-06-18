@@ -9,7 +9,7 @@
             "type": "go",
             "request": "launch",
             "mode": "auto",
-            "program": "C:\\Avi\\Projects\\Example\\opa-demo\\service\\cmd\\main.go",
+            "program": "C:\\Avi\\Projects\\Example\\opa-demo\\cmd\\main.go",
             "env": {},
             "args": []
         }

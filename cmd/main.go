@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"log"
 	"net/http"
+	"reflect"
 	"strings"
 
 	"demo/pkg/authorizer"
@@ -15,7 +17,7 @@ import (
 
 func main() {
 
-	dataStoreBytes, _ := ioutil.ReadFile("./config/opa/data.json")
+	dataStoreBytes, _ := ioutil.ReadFile("../config/opa/data.json")
 
 	var dataStore map[string]interface{}
 
@@ -24,7 +26,7 @@ func main() {
 		return
 	}
 
-	auth, err := authorizer.New("./config/opa", dataStore)
+	auth, err := authorizer.New("../config/opa", dataStore)
 
 	if err != nil {
 		log.Printf("%v", err)
@@ -40,10 +42,10 @@ func main() {
 		}
 		if allowed {
 			path := strings.Split(r.URL.Path, "/")[1:]
-			fmt.Println(path[1])
-			someMap := dataStore["accounts"]
-			fmt.Println(someMap)
-			_, err = w.Write([]byte("Hello " + r.Header.Get("username")))
+			accountsMap := dataStore["accounts"]
+			selectedAccount := getAccountById(accountsMap, path[1])
+			selectedAccountJson, _ := json.Marshal(selectedAccount)
+			_, err = w.Write(selectedAccountJson)
 			if err != nil {
 				return
 			}
@@ -58,4 +60,8 @@ func main() {
 	if err != nil {
 		log.Printf("%v", err)
 	}
+}
+
+func getAccountById(accountsMap interface{}, accountId string) interface{} {
+	return reflect.ValueOf(accountsMap).MapIndex(reflect.ValueOf(accountId)).Elem().Interface()
 }
