@@ -3,14 +3,12 @@ package authorizer
 import (
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"strings"
 
 	"github.com/open-policy-agent/opa/rego"
 	"github.com/open-policy-agent/opa/storage"
 	"github.com/open-policy-agent/opa/storage/inmem"
-	"github.com/open-policy-agent/opa/util"
 )
 
 type opaInput struct {
@@ -21,16 +19,6 @@ type opaInput struct {
 	UserName interface{} `json:"userName"`
 }
 
-type Accounts struct {
-	Accounts []Account `json:"accounts"`
-}
-
-type Account struct {
-	Id       int    `json:"ID"`
-	Username string `json:"username"`
-	Region   string `json:"region"`
-}
-
 type OPAAuthorizer struct {
 	store storage.Store
 	txn   storage.Transaction
@@ -38,14 +26,8 @@ type OPAAuthorizer struct {
 }
 
 // Returns a new OPA object
-func New(opaDirectory string, dataStoreBytes []byte) (opaAuthorizer OPAAuthorizer, err error) {
+func New(opaDirectory string, dataStore map[string]interface{}) (opaAuthorizer OPAAuthorizer, err error) {
 	ctx := context.Background()
-	var dataStore map[string]interface{}
-
-	err = util.UnmarshalJSON(dataStoreBytes, &dataStore)
-	if err != nil {
-		fmt.Println("Failed to parse data store json")
-	}
 
 	store := inmem.NewFromObject(dataStore)
 	txn, err := store.NewTransaction(ctx, storage.WriteParams)

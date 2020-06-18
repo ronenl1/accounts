@@ -5,17 +5,26 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strings"
 
 	"demo/pkg/authorizer"
 
 	"github.com/julienschmidt/httprouter"
+	"github.com/open-policy-agent/opa/util"
 )
 
 func main() {
 
 	dataStoreBytes, _ := ioutil.ReadFile("./config/opa/data.json")
 
-	auth, err := authorizer.New("./config/opa", dataStoreBytes)
+	var dataStore map[string]interface{}
+
+	err := util.UnmarshalJSON(dataStoreBytes, &dataStore)
+	if err != nil {
+		return
+	}
+
+	auth, err := authorizer.New("./config/opa", dataStore)
 
 	if err != nil {
 		log.Printf("%v", err)
@@ -30,6 +39,10 @@ func main() {
 			return
 		}
 		if allowed {
+			path := strings.Split(r.URL.Path, "/")[1:]
+			fmt.Println(path[1])
+			someMap := dataStore["accounts"]
+			fmt.Println(someMap)
 			_, err = w.Write([]byte("Hello " + r.Header.Get("username")))
 			if err != nil {
 				return
