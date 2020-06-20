@@ -17,7 +17,7 @@ import (
 
 func main() {
 
-	dataStoreBytes, _ := ioutil.ReadFile("../config/opa/data.json")
+	dataStoreBytes, _ := ioutil.ReadFile("./config/opa/data.json")
 
 	var dataStore map[string]interface{}
 
@@ -26,8 +26,7 @@ func main() {
 		return
 	}
 
-	auth, err := authorizer.New("../config/opa", dataStore)
-
+	auth, err := authorizer.New("./config/opa", dataStore)
 	if err != nil {
 		log.Printf("%v", err)
 	} else {
