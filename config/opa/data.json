@@ -1,19 +1,16 @@
 {
-  "accounts": [
-    {
-      "ID": "1",
+  "accounts": {
+    "1": {
       "username": "Bob",
       "region": "US"
     },
-    {
-      "ID": "2",
+    "2": {
       "username": "Mark",
       "region": "EU"
     },
-    {
-      "ID": "3",
+    "3": {
       "username": "Michael",
       "region": "EU"
     }
-  ]
+  }
 }

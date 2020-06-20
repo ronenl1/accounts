@@ -16,7 +16,7 @@ type opaInput struct {
 	Path     interface{} `json:"path"`
 	Roles    interface{} `json:"roles"`
 	Region   interface{} `json:"region"`
-	UserName interface{} `json:"userName"`
+	Username interface{} `json:"username"`
 }
 
 type OPAAuthorizer struct {
@@ -72,7 +72,7 @@ func (opaAuth *OPAAuthorizer) convertRequestToInput(req *http.Request) opaInput 
 		Path:     strings.Split(req.URL.Path, "/")[1:],
 		Region:   req.Header.Get("region"),
 		Roles:    strings.Split(req.Header.Get("roles"), ","),
-		UserName: req.Header.Get("username"),
+		Username: req.Header.Get("username"),
 	}
 	return input
 }
