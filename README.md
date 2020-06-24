@@ -31,7 +31,7 @@ The service uses `data.json` as the source of truth, if you want to add more acc
 
 The service will listen on port :7777 in `/accounts/{id}`. You will get response only from account IDs that specified in `data.json`.
 
-The policies will allow users to access their own account ID or any user with costumer-service role only to the users in his region.
+The policies will allow users to access their own account ID or any user with costumer-service role only to the accounts in his region.
 
 Example for authorized request:
 ```bash
