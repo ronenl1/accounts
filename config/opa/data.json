@@ -1,15 +1,15 @@
 {
   "accounts": {
     "1": {
-      "username": "Bob",
+      "username": "bob",
       "region": "US"
     },
     "2": {
-      "username": "Mark",
+      "username": "mark",
       "region": "EU"
     },
     "3": {
-      "username": "Michael",
+      "username": "michael",
       "region": "EU"
     }
   }

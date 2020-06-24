@@ -17,10 +17,10 @@ The policies will allow users to access their own account ID or any user with co
 
 Example for authorized request:
 ```bash
-curl -H username:Alice -H region:EU -H roles:customer-service http://localhost:7777/accounts/2
+curl -H username:alice -H region:EU -H roles:customer-service http://localhost:7777/accounts/2
 ```
 
 Example for unauthorized request:
 ```bash
-curl -H username:Bob -H region:US http://localhost:7777/accounts/3
+curl -H username:bob -H region:US http://localhost:7777/accounts/3
 ```
