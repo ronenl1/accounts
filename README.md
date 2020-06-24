@@ -2,7 +2,25 @@
 
 This repository includes a go service called accounts that using embedded OPA for policy decisions.
 
-If you want to start the service run the following command from the root of the directory:
+## Download & Run
+- Grab the latest [binary](https://github.com/ronenl1/accounts/releases) from the releases page and run it using the following command:
+### Linux
+```bash
+./accounts_linux_amd64
+```
+### Windows
+```powershell
+.\accounts_windows.exe
+```
+### MacOS
+```bash
+./accounts_darwin_amd64
+```
+- Clone the repo sources and run the service using [Go CLI](https://golang.org/dl/):
+```bash
+git clone https://github.com/ronenl1/accounts.git
+```
+Run the following command from the *root* of the repo:
 ```bash
 go run ./cmd/main.go
 ```
