@@ -1,7 +1,7 @@
 {
   "method": "GET",
   "username": "alice",
-  "region": "US",
+  "region": "EU",
   "roles": ["customer-service"],
-  "path": ["account", "111"]
+  "path": ["accounts", "2"]
 }
