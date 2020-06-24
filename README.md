@@ -20,7 +20,7 @@ This repository includes a go service called accounts that using embedded OPA fo
 ```bash
 git clone https://github.com/ronenl1/accounts.git
 ```
-Run the following command from the *root* of the repo:
+Run the following command from the **root** of the repo:
 ```bash
 go run ./cmd/main.go
 ```
