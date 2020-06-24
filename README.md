@@ -29,7 +29,7 @@ When the service is ready to accept requests you will see: "OPA engine is up!"
 
 The service uses `data.json` as the source of truth, if you want to add more accounts just edit this file and restart the service.
 
-The service will listen on port :7777 in /accounts/{id}. You will get response only from account IDs that specified in `data.json`.
+The service will listen on port :7777 in `/accounts/{id}`. You will get response only from account IDs that specified in `data.json`.
 
 The policies will allow users to access their own account ID or any user with costumer-service role only to the users in his region.
 
