@@ -2,7 +2,7 @@
   "accounts": {
     "1": {
       "username": "bob",
-      "region": "US"
+      "region": "EU"
     },
     "2": {
       "username": "mark",
@@ -10,7 +10,7 @@
     },
     "3": {
       "username": "michael",
-      "region": "EU"
+      "region": "US"
     }
   }
 }
