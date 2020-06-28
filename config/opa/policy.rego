@@ -9,7 +9,7 @@ allow {
     input.method == "GET"
     some id
     input.path = ["accounts",id]
-    data.accounts[id].username == input.username
+    input.username == data.accounts[id].username 
 }
 
 # Allow support to access accounts of costumers
