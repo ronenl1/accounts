@@ -18,5 +18,5 @@ allow {
     some id
     input.path = ["accounts",id]
     input.roles[_] == "customer-service"
-    input.region  == data.accounts[id].region
+    input.region == data.accounts[id].region
 }
