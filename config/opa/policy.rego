@@ -4,7 +4,7 @@ default allow = false
 
 import data
 
-# Allow costumers to access their own accounts
+# Allow customers to access their own accounts
 allow {
     input.method == "GET"
     some id
@@ -12,7 +12,7 @@ allow {
     input.username == data.accounts[id].username 
 }
 
-# Allow support to access accounts of costumers
+# Allow customer service to access accounts of customers
 allow {
     input.method == "GET"
     some id
